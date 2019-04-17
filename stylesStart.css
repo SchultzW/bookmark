@@ -76,6 +76,9 @@ body.show-floater .overlay {
 }
 .delete-icon-area {
     display: flex;
-    align-items: center;
+    align-items: right;
     height: 40px;
+  }
+  .delete-icon {
+    color: red;
   }
