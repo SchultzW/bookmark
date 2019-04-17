@@ -17,8 +17,11 @@ Create the look and feel of your page
     Style the list of bookmarks and the page as a whole so it is reasonably attractive
     -   I have provided a screen shot of my page as well as 
         a screen shot of what my page looks like when I'm adding a new bookmark.
-
-Create a class called Bookmarker
+*/
+class Bookmarker
+{
+    /*
+    Create a class called Bookmarker
     PART 1 - Show the bookmarks
     -   Add a constructor
         -   Create an instance variable called bookmarks.
@@ -27,14 +30,40 @@ Create a class called Bookmarker
             [
                 {
                     description: "Really cool site for open source photos", 
-                    image: "",
+                    image: "",//comes from someplace else later will use AJAx to grab it
                     link: "https://www.pexels.com/", 
-                    title: "https://www.pexels.com/"
+                    title: "https://www.pexels.com/" //come from some place else
                 },
             ]
         -   call the method fillBookmarksList and pass in the bookmarks
 
-    -   Add the generateBookmarkHtml method
+    */
+    constructor()
+    {
+        //create bookmarks and put into local storage
+        this.boorkmarks= JSON.parse(localStorage.getItem('bookmarks'))
+        if(!this.bookmarks)
+        {
+            this.bookmarks=[{description:"",image:"",link:"",title:""}];
+        }
+        else
+        {
+            this.bookmarks=[ {
+                description: "Really cool site for open source photos", 
+                image: "",//comes from someplace else later will use AJAx to grab it
+                link: "https://www.pexels.com/", 
+                title: "https://www.pexels.com/" //come from some place else
+            }]
+        } 
+        this.generateHtml=this.generateHtml.bind(this);
+        this.fillBookmarks=this.fillBookmarks.bind(this);
+        this.deleteBookmark=this.deleteBookmark.bind(this);
+        this.fillBookmarks();
+    }
+    generateHtml(bookmark,index)
+    {
+        /*
+            -   Add the generateBookmarkHtml method
         -   This method returns a template literal containing the html for ONE bookmark in the array.
             It gets called in fillBookMarksList.  It has 2 parameters a bookmark and an index.
         -   CUT the html for ONE bookmark from your html page into the body of your method.
@@ -42,8 +71,37 @@ Create a class called Bookmarker
         -   Replace the hardcoded description, image, link and title (of the sample bookmark) 
             with template strings that use the properties of the bookmark object
         -   Return the template literal
+        */
+       return `
+            <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-1 col-xs-1 col-lg-1 col-sm-1 checkbox">
+                </label>
+                </div>
+                ${bookmark.url}
+                </div>
+                <div>
+                ${bookmark.description}
+                </div>
+                <div class="col-md-1 col-xs-1 col-lg-1 col-sm-1 delete-icon-area">
+                <a class="" href="/" onclick="bookmark.deleteBookmark(event,${index})"><i id="deleteBookmark" class="delete-icon glyphicon glyphicon-trash"></i></a>             
+                </div>
+            </div>
+            </li>
+            `
+        
 
-    -   Add the fillBookmarksList method.  It has bookmarks as its parameter.
+       
+    }
+    fillBookmarks()
+    {
+        localStorage['bookmarks']=JSON.stringify(this.bookmarks);
+        let bookmarkHtml=this.bookmarks.reduce
+        ((html,bookmark,index)=>html+=this.generateHtml(bookmark,index),'')
+        document.getElementById("bookmarks-list").innerHTML=bookmarkHtml;
+        
+        /*
+        -   Add the fillBookmarksList method.  It has bookmarks as its parameter.
         -   Save the bookmarks to local storage
         -   Create a variable bookmarkHtml and set it equal to the
             the return value for each of the individual tasks combined
@@ -54,9 +112,12 @@ Create a class called Bookmarker
                     '');
         -   Set contents of the bookmarks-list element on the page to the bookmarkHtml variable
         );
-    END OF PART 1 - TEST AND DEBUG YOUR CODE - YOU SHOULD SEE HARDCODED BOOKMARKS YOUR ON PAGE
-
-    PART 2 - Delete a bookmark
+        */
+    }
+    deleteBookmark(event,index)
+    {
+        /*
+             PART 2 - Delete a bookmark
     -   Add the deleteBookmark method.  It has 2 parameters, event and index
         -   prevent the default action of the anchor tag using the event parameter
         -   delete the bookmark from the list based on the index
@@ -64,6 +125,20 @@ Create a class called Bookmarker
     -   Add an onclick handler to the delete icon
         The handler should call the deleteBookmark method with event 
         and index (template string) as its parameters
+        */
+       event.preventDefault();
+       this.bookmarks.splice(index,1);
+       this.fillBookmarks();
+    }
+}
+/*
+
+
+
+    
+    END OF PART 1 - TEST AND DEBUG YOUR CODE - YOU SHOULD SEE HARDCODED BOOKMARKS YOUR ON PAGE
+
+   
     END OF PART 2 - TEST AND DEBUG YOUR CODE
 
     PART 3 - Add a bookmark
@@ -92,4 +167,6 @@ Create a class called Bookmarker
     Add a window on load event handler that instantiates a Bookmarker object.  
     Use and arrow or anonymous function
 */
+let bookmarker;
+window.onload=()=>(bookmarker=new Bookmarker());
 
