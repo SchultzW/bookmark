@@ -42,21 +42,13 @@ class Bookmarker
     constructor()
     {
         //create bookmarks and put into local storage
-       /* this.boorkmarks= JSON.parse(localStorage.getItem('bookmarks'))
+        this.boorkmarks= JSON.parse(localStorage.getItem('BOOKMARKS'));
+        
         if(!this.bookmarks)
         {
-            this.bookmarks=[{description:"",image:"",link:"",title:""}];
+            this.bookmarks=[{description:"I'm a description",image:"",link:"I am a URL",title:"I am a URL"}];
         }
-        */
-        
-        
-            this.bookmarks=[ {
-                description: "Really cool site for open source photos", 
-                image: "",//comes from someplace else later will use AJAx to grab it
-                link: "https://www.pexels.com/", 
-                title: "https://www.pexels.com/" //come from some place else
-            }]
-         
+
         this.generateHtml=this.generateHtml.bind(this);
         this.fillBookmarks=this.fillBookmarks.bind(this);
         this.deleteBookmark=this.deleteBookmark.bind(this);
@@ -84,18 +76,16 @@ class Bookmarker
         -   Return the template literal
         */
        return `
-            <li class="list-group-item">
-            <div class="row">
-                <div class="col-md-1 col-xs-1 col-lg-1 col-sm-1 checkbox">
-                </label>
-                <div class="col-md-10 col-xs-10 col-lg-10 col-sm-10">
+            <li class=" container ">
+            <div class="row wrapper">
+                <div class="list-group-item col-md-8" id="link">
                     ${bookmark.link}
                 </div>
-                <div class="col-lg-12">
+                <div class="list-group-item col-md-8" id="desc">
                     ${bookmark.description}
                 </div>
                 <div class="col-md-1 col-xs-1 col-lg-1 col-sm-1 delete-icon-area">
-                <a class="" href="/" onclick="bookmark.deleteBookmark(event,${index})"><i id="deleteBookmark" class="delete-icon glyphicon glyphicon-trash"></i></a>             
+                <a class="" href="/" onclick="bookmarker.deleteBookmark(event,${index})"><i id="deleteBookmark" class="delete-icon glyphicon glyphicon-trash"></i></a>             
                 </div>
             </div>
             </li>
@@ -106,7 +96,7 @@ class Bookmarker
     }
     fillBookmarks()
     {
-        localStorage['bookmarks']=JSON.stringify(this.bookmarks);
+        localStorage['BOOKMARKS']=JSON.stringify(this.bookmarks);
         let bookmarkHtml=this.bookmarks.reduce
         ((html,bookmark,index)=>html+=this.generateHtml(bookmark,index),'')
         document.getElementById("bookmarks-list").innerHTML=bookmarkHtml;
@@ -162,6 +152,8 @@ class Bookmarker
             parentUrl.classList.remove('has-error');
             let newBookmark={description:inputDesc,image:"",link:inputUrl,title:inputUrl};
             this.bookmarks.push(newBookmark);
+            document.getElementById('url').value='';
+            document.getElementById('description').value='';
             this.fillBookmarks();
         }
         /*

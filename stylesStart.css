@@ -65,14 +65,11 @@ body.show-floater .overlay {
 {
     padding-top: 15px;
 }
-.image-box{
+.box{
     width:100px;
     height:100px;
     border:10px solid #000;
     background: gray;
-
-
-
 }
 .delete-icon-area {
     display: flex;
@@ -81,4 +78,21 @@ body.show-floater .overlay {
   }
   .delete-icon {
     color: red;
+  }
+  .bookmarks-list{
+    width:100px;
+    height:100px;
+    padding-top: 100px;
+  }
+  .wrapper {
+    padding:10px;
+    background: gray;
+    border:1px solid;
+    display:inline-block;
+    margin:25px
+  }
+  .center {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
   }
