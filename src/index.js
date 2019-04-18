@@ -9,11 +9,12 @@ class Bookmarker
         
         
         this.bookmarks= JSON.parse(localStorage.getItem('BOOKMARKS'));
-        
-        if(this.bookmarks.length == 0)
+    
+        if(!this.bookmarks)
         {
             this.bookmarks=[{description:"I'm a description",image:"",link:"I am a URL",title:"I am a URL"}];
         }
+        
         
         this.generateHtml=this.generateHtml.bind(this);
         this.fillBookmarks=this.fillBookmarks.bind(this);
@@ -63,7 +64,8 @@ class Bookmarker
     }
     fillBookmarks()
     {
-        localStorage.setItem['BOOKMARKS']=JSON.stringify(this.bookmarks);
+        localStorage['BOOKMARKS']=JSON.stringify(this.bookmarks);
+        //localStorage.setItem('BOOKMARKS',JSON.stringify.this.bookmarks);
         let bookmarkHtml=this.bookmarks.reduce
         ((html,bookmark,index)=>html+=this.generateHtml(bookmark,index),'')
         document.getElementById("bookmarks-list").innerHTML=bookmarkHtml;
