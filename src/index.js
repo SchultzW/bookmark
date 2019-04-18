@@ -1,54 +1,20 @@
-/* 
-Setup your development environment
-    -   clone the repository with the starting files from github
-    -   run npm init from the command line to create your package.json file
-    -   run npm install ... and include the tools that you want to use in your application
-    -   edit the scripts block in package.json to include npm commands you want to use
- 
-Create the look and feel of your page
-    Use html 5 input attributes to make sure that the url and description are provided.
-        The url should be a valid url too.
-    -   At this point the user enters the url and the description.  After we talk about
-        making an ajax call in chapter 3, we'll get the image and the title from an api.
-    Add one or more sample bookmarks to the html page.
-    -   Each bookmark is a link that contains: an image, 
-        and the text that the user sees.  It also has a description and an icon for deleting.
-    -   Don't forget the event handler on the control that deletes the bookmark
-    Style the list of bookmarks and the page as a whole so it is reasonably attractive
-    -   I have provided a screen shot of my page as well as 
-        a screen shot of what my page looks like when I'm adding a new bookmark.
-*/
+
+
 class Bookmarker
 {
-    /*
-    Create a class called Bookmarker
-    PART 1 - Show the bookmarks
-    -   Add a constructor
-        -   Create an instance variable called bookmarks.
-        -   Try to load the bookmarks from local storage.  If there's nothing in local storage 
-            set it equal to an object literal that contains at least 2 bookmarks
-            [
-                {
-                    description: "Really cool site for open source photos", 
-                    image: "",//comes from someplace else later will use AJAx to grab it
-                    link: "https://www.pexels.com/", 
-                    title: "https://www.pexels.com/" //come from some place else
-                },
-            ]
-        -   call the method fillBookmarksList and pass in the bookmarks
-       
-
-    */
+   
     constructor()
     {
         //create bookmarks and put into local storage
-        this.boorkmarks= JSON.parse(localStorage.getItem('BOOKMARKS'));
         
-        if(!this.bookmarks)
+        
+        this.bookmarks= JSON.parse(localStorage.getItem('BOOKMARKS'));
+        
+        if(this.bookmarks.length == 0)
         {
             this.bookmarks=[{description:"I'm a description",image:"",link:"I am a URL",title:"I am a URL"}];
         }
-
+        
         this.generateHtml=this.generateHtml.bind(this);
         this.fillBookmarks=this.fillBookmarks.bind(this);
         this.deleteBookmark=this.deleteBookmark.bind(this);
@@ -78,14 +44,15 @@ class Bookmarker
        return `
             <li class=" container ">
             <div class="row wrapper">
+                <div class="col-md-2 box"></div>
                 <div class="list-group-item col-md-8" id="link">
                     ${bookmark.link}
                 </div>
                 <div class="list-group-item col-md-8" id="desc">
                     ${bookmark.description}
                 </div>
-                <div class="col-md-1 col-xs-1 col-lg-1 col-sm-1 delete-icon-area">
-                <a class="" href="/" onclick="bookmarker.deleteBookmark(event,${index})"><i id="deleteBookmark" class="delete-icon glyphicon glyphicon-trash"></i></a>             
+                <div class="col-md-1 delete-icon-area">
+                    <a class="" href="/" onclick="bookmarker.deleteBookmark(event,${index})"><i id="deleteBookmark" class="delete-icon glyphicon glyphicon-trash"></i></a>             
                 </div>
             </div>
             </li>
@@ -96,7 +63,7 @@ class Bookmarker
     }
     fillBookmarks()
     {
-        localStorage['BOOKMARKS']=JSON.stringify(this.bookmarks);
+        localStorage.setItem['BOOKMARKS']=JSON.stringify(this.bookmarks);
         let bookmarkHtml=this.bookmarks.reduce
         ((html,bookmark,index)=>html+=this.generateHtml(bookmark,index),'')
         document.getElementById("bookmarks-list").innerHTML=bookmarkHtml;
@@ -175,17 +142,6 @@ class Bookmarker
 }
 /*
 
-
-
-    
-    END OF PART 1 - TEST AND DEBUG YOUR CODE - YOU SHOULD SEE HARDCODED BOOKMARKS YOUR ON PAGE
-
-   
-    END OF PART 2 - TEST AND DEBUG YOUR CODE
-
-    PART 3 - Add a bookmark
-    -   
-    END OF PART 3 - TEST AND DEBUG YOUR CODE
 
     EXTRA CREDIT: 
     -   Do something on the page to draw attention to the form when you enter and leave 
