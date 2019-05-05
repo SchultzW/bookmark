@@ -1,5 +1,3 @@
-
-
 class Bookmarker
 {
    
@@ -45,9 +43,11 @@ class Bookmarker
        return `
             <li class=" container ">
             <div class="row wrapper">
-                <div class="col-md-2 box"></div>
+                <div class="col-md-2 box">
+                    <div img src=${bookmark.image}>image</div>
+                </div>
                 <div class="list-group-item col-md-8" id="link">
-                    ${bookmark.link}
+                    <a href=" ${bookmark.link}"> ${bookmark.title}</a>;
                 </div>
                 <div class="list-group-item col-md-8" id="desc">
                     ${bookmark.description}
